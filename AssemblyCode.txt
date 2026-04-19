@@ -1,0 +1,28 @@
+.data
+A:      .word 5, 2, 7, 3, 1, 4, 6, 8, 9, 10
+P:      .space 40          
+.text
+.globl main
+main:
+    la   $t0, A            
+    la   $t1, P           
+    lw   $t2, 0($t0)       
+    sw   $t2, 0($t1)       
+    li   $t3, 1           
+    li   $t4, 10          
+loop:
+    beq  $t3, $t4, end    
+    sll  $t5, $t3, 2       
+    add  $t6, $t0, $t5     
+    lw   $t7, 0($t6)       
+    addi $t8, $t5, -4     
+    add  $t9, $t1, $t8     
+    lw   $s0, 0($t9)       
+    xor  $s1, $s0, $t7     
+    add  $s2, $t1, $t5    
+    sw   $s1, 0($s2)
+    addi $t3, $t3, 1       
+    j    loop
+end:
+    li   $v0, 10           
+    syscall
